@@ -29,11 +29,13 @@ class CarController {
         const _price = parseFloat(price);
         const _idTypeCar = parseInt(typeCar);
 
+
         try {
             await db.query(`INSERT INTO cars (title, price, photo, discription, id_type_car) 
             VALUES('${title}', ${_price}, '${photo}', '${discription}', ${_idTypeCar});`);
         }
         catch (err) {
+            console.log(err);
             response.status(500);
             response.send('Bad');
             return;
