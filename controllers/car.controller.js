@@ -55,6 +55,26 @@ class CarController {
             response.sendStatus(500);
         }
     }
+
+    async updateCar(request, response){
+        const { id, discription, photo, price, title, type } = request.body;
+
+        const _price = parseFloat(price);
+        const _idTypeCar = parseInt(type);
+
+        try{
+            db.query(`UPDATE cars SET title='${title}', price=${_price}, photo='${photo}', discription='${discription}', id_type_car=${_idTypeCar} WHERE id=${id};`)
+        }
+        catch(err){
+            console.log(err);
+            response.sendStatus(500);
+            return;
+        }
+        
+        
+
+        response.sendStatus(200);
+    }
 }
 
 module.exports = new CarController();
