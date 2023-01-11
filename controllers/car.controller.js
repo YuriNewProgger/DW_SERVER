@@ -43,6 +43,18 @@ class CarController {
 
         response.json("Success");
     }
+
+    async deleteCar(request, response) {
+        const { id } = request.body;
+        try {
+            await db.query(`DELETE FROM cars WHERE id=${id}`);
+            response.sendStatus(200);
+        }
+        catch (err) {
+            console.log(err);
+            response.sendStatus(500);
+        }
+    }
 }
 
 module.exports = new CarController();
