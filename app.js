@@ -2,6 +2,7 @@ const express = require('express');
 const loginRouter = require('./routes/login.routers');
 const registrRouter = require('./routes/registr.router');
 const carRouter = require('./routes/car.routers');
+const rentRouter = require('./routes/rent.routers');
 const bodyParser = require('body-Parser');
 
 
@@ -13,7 +14,8 @@ app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:500
 app.use(bodyParser());
 
 app.use(function(request, response, next) {
-    response.header('Access-Control-Allow-Origin', "http://localhost:3000");
+    //response.header('Access-Control-Allow-Origin', "http://localhost:3000");
+    response.header('Access-Control-Allow-Origin', "*");
     response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');    
     response.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
@@ -23,6 +25,7 @@ app.use(function(request, response, next) {
 app.use('/api', loginRouter);
 app.use('/api', registrRouter);
 app.use('/api', carRouter);
+app.use('/api', rentRouter);
 
 app.listen(port, function(){
     console.log(`Server started ${port}`);
