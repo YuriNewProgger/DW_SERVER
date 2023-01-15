@@ -75,6 +75,10 @@ class CarController {
 
         response.sendStatus(200);
     }
+
+    async registrRent(request, response){
+        
+    }
 }
 
 module.exports = new CarController();
