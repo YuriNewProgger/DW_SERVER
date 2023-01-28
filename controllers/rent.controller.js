@@ -8,7 +8,8 @@ class RentController {
 
             const _isCompleated = await db.query(`select is_compleate from rents where id_car = ${id_car} and id_user = ${id_user} order by end_date desc `);
 
-            if(!_isCompleated.rows[0].is_compleate){
+            console.log(_isCompleated.rows);
+            if(_isCompleated.rows.length > 0){
                 response.sendStatus(400);
                 return;
             }

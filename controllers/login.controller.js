@@ -25,8 +25,11 @@ class LoginController {
             response.status(404);
             response.json('Bad');
         }
-        else
-            response.json(account.rows[0]);
+        else{
+            //const history = await db.query()
+            response.json({status: 200, value: account.rows[0]});
+        }
+            
     }
 }
 
