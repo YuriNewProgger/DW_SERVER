@@ -3,6 +3,7 @@ const loginRouter = require('./routes/login.routers');
 const registrRouter = require('./routes/registr.router');
 const carRouter = require('./routes/car.routers');
 const rentRouter = require('./routes/rent.routers');
+const userRouter = require('./routes/users.routers');
 const bodyParser = require('body-Parser');
 
 
@@ -26,6 +27,7 @@ app.use('/api', loginRouter);
 app.use('/api', registrRouter);
 app.use('/api', carRouter);
 app.use('/api', rentRouter);
+app.use('/api', userRouter);
 
 app.listen(port, function(){
     console.log(`Server started ${port}`);
