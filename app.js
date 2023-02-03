@@ -29,6 +29,8 @@ app.use('/api', carRouter);
 app.use('/api', rentRouter);
 app.use('/api', userRouter);
 
+app.use(express.static(__dirname + "/public"));
+
 app.listen(port, function(){
     console.log(`Server started ${port}`);
 })
