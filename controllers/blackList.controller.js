@@ -45,10 +45,26 @@ class BlackList {
 
     async deleteFromBlackList(request, response){
         try {
-            //await db.query()
+            const { snpassport } = request.body;
+
+            const user = await db.query(`select id from users where snpassport = '${snpassport}'`);
+
+            if (user.rows.length === 0) {
+                response.json({ status: 404, values: [] })
+                return;
+            }
+
+            await db.query(`delete from black_list where id_user = '${user.rows[0].id}'`)
+
+            const list = await db.query(`select users.name, users.surname , users.snpassport , users.id as "user_id", black_list.id as "blacklist_id", black_list.reason 
+            from users join black_list on users.id = black_list.id_user `);
+
+            response.json({ status: 200, values: list.rows });
+
         } 
         catch (error) {
-            
+            response.sendStatus(500);
+            console.log(error);
         }
     }
 }
