@@ -1,4 +1,5 @@
 const db = require('../db');
+const moment = require('moment');
 
 class RentController {
 
@@ -14,8 +15,13 @@ class RentController {
                 return;
             }
 
+            const originalPrice = await db.query(`select price  from cars where id = ${id_car}`);
+            let firstDate = moment(start_date, "YYYY-MM-DD");
+            let secondDate = moment(end_date, "YYYY-MM-DD");
+            let days = secondDate.diff(firstDate, 'days') ;
+
             await db.query(`INSERT INTO rents (id_car, id_user, start_date, end_date, is_compleate, total_price) 
-            VALUES(${parseInt(id_car)}, ${id_user}, '${start_date}', '${end_date}', ${is_compleate}, ${parseInt(total_price)});`)
+            VALUES(${parseInt(id_car)}, ${id_user}, '${start_date}', '${end_date}', ${is_compleate}, ${days * originalPrice.rows[0].price});`)
             
             response.sendStatus(200);
         }
