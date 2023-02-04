@@ -25,8 +25,7 @@ class LoginController {
             const blackListItem = await db.query(`select * from black_list where id_user=${account.rows[0].id}`)
 
             if (blackListItem.rows.length > 0) {
-                response.status(404);
-                response.json('Blocked');
+                response.sendStatus(400);
                 return;
             }
             else {
