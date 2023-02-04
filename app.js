@@ -4,6 +4,7 @@ const registrRouter = require('./routes/registr.router');
 const carRouter = require('./routes/car.routers');
 const rentRouter = require('./routes/rent.routers');
 const userRouter = require('./routes/users.routers');
+const blacListRouter = require('./routes/blacklist.routers');
 const bodyParser = require('body-Parser');
 
 
@@ -28,6 +29,7 @@ app.use('/api', registrRouter);
 app.use('/api', carRouter);
 app.use('/api', rentRouter);
 app.use('/api', userRouter);
+app.use('/api', blacListRouter);
 
 app.use(express.static(__dirname + "/public"));
 
