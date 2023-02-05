@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors'); //new
 const loginRouter = require('./routes/login.routers');
 const registrRouter = require('./routes/registr.router');
 const carRouter = require('./routes/car.routers');
@@ -11,6 +12,7 @@ const bodyParser = require('body-Parser');
 
 const port = 5000;
 const app = express();
+app.use(cors()); //new
 app.use(bodyParser.json({limit: "50mb"}));
 app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 app.use(bodyParser());
