@@ -31,6 +31,37 @@ class RentController {
         }
 
     }
+
+    async getActiveRents(request, response){
+        try {
+            const rents = await db.query(`select users."name", users.surname, users.patronymic, users.snpassport, cars.title, rents.id as "id_rents", rents.start_date, rents.end_date 
+            from rents join cars on rents.id_car = cars.id join users on rents.id_user = users.id 
+            where rents.is_compleate = false`);
+
+            rents.rows.forEach(item => {
+                item.start_date = addDays(item.start_date, 1).toJSON();
+                item.end_date = addDays(item.end_date, 1).toJSON();
+
+                let a = moment(item.end_date.replace('T', ' ').replace('Z','').split(' ')[0], "YYYY-MM-DD");
+                let b = moment(new Date().toJSON().replace('T', ' ').replace('Z','').split(' ')[0], "YYYY-MM-DD");
+                let days = b.diff(a, 'days');
+        
+                item.isOverdue = days > 0 ? true : false;
+            })
+
+            response.json({status: 200, value: rents.rows});
+        } 
+        catch (error) {
+            response.sendStatus(500);
+            console.log(error);
+        }
+    }
 }
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
 
 module.exports = new RentController();
