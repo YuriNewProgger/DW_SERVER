@@ -29,7 +29,7 @@ class LoginController {
                 return;
             }
             else {
-                const history = await db.query(`select rents.id, title, start_date, end_date, total_price from rents join cars on rents.id_car = cars.id where id_user=${account.rows[0].id}`);
+                const history = await db.query(`select rents.id, title, start_date, end_date, total_price, is_compleate from rents join cars on rents.id_car = cars.id where id_user=${account.rows[0].id}`);
                 response.json({ status: 200, value: account.rows[0], history: history.rows });
             }
 
