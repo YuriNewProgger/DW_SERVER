@@ -1,4 +1,5 @@
 const carModel = require('../Models/Car.model');
+const authServise = require('../Services/AuthService')
 
 class CarController {
 
@@ -8,7 +9,7 @@ class CarController {
             response.json(await carModel.GetCars());
         } 
         catch (error) {
-            console.log(err);
+            console.log(error);
             response.sendStatus(500);
         }
     }

@@ -4,7 +4,6 @@ const crypto = require('crypto');
 class AuthModel{
 
     async GetLogin(loginParams) {
-
         const { login, password } = loginParams;
         const hash = crypto.createHash('sha256').update(password).digest('hex');
         const account = await db.query(`
@@ -22,14 +21,18 @@ class AuthModel{
             return { status: 400, value: "", history: [] };
         }
         else {
-            const history = await db.query(`select rents.id, title, start_date, end_date, total_price, is_compleate from rents join cars on rents.id_car = cars.id where id_user=${account.rows[0].id}`);
-            return { status: 200, value: account.rows[0], history: history.rows };
+            //const history = await db.query(`select rents.id, title, start_date, end_date, total_price, is_compleate from rents join cars on rents.id_car = cars.id where id_user=${account.rows[0].id}`);
+            return { status: 200, value: account.rows[0] };
         }
 
     }
 
     async Registration(registrationParams) {
-        const { name, surname, patronymic, snpassport, age, phone, email, login, password } = registrationParams;
+        const { name, surname, patronymic, snpassport, year, phone, email, login, password } = registrationParams;
+
+        if(new Date().getFullYear() - year < 18){
+            return {status: 400, text: "Age no valid"};
+        }
 
         const hash = crypto.createHash('sha256').update(password).digest('hex');
 
@@ -52,7 +55,7 @@ class AuthModel{
                         select (select id from logins where login = '${login}') into idLogin;
 
                         INSERT INTO users ("name", surname, patronymic, age, snpassport, phone, photo, email, id_login, id_role)
-                            VALUES('${name}', '${surname}', '${patronymic}', '${age}', '${snpassport}', '${phone}', 'NULL', '${email}', idLogin, 2);
+                            VALUES('${name}', '${surname}', '${patronymic}', '${new Date().getFullYear() - year}', '${snpassport}', '${phone}', 'NULL', '${email}', idLogin, 2);
 
                         end
                     $$;

@@ -34,6 +34,26 @@ class UsersController{
             response.sendStatus(500);
         }
     }
+
+    async getAuthUser(request, response) {
+        try {
+            response.json(await userModel.GetAuthUser(request.headers))
+        } 
+        catch (error) {
+            console.log(error);
+            response.sendStatus(500);
+        }
+    }
+
+    async getAllRents(request, response){
+        try {
+            response.json(await userModel.GetAllRents(request.body))
+        } 
+        catch (error) {
+            console.log(error);
+            response.sendStatus(500);
+        }
+    }
 }
 
 module.exports = new UsersController();

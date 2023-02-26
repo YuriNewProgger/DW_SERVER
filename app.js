@@ -6,24 +6,18 @@ const carRouter = require('./routes/car.routers');
 const rentRouter = require('./routes/rent.routers');
 const userRouter = require('./routes/users.routers');
 const blacListRouter = require('./routes/blacklist.routers');
-const bodyParser = require('body-Parser');
 
 
 
 const port = 5000;
 const app = express();
-app.use(cors()); //new
-app.use(bodyParser.json({limit: "50mb"}));
-app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
-app.use(bodyParser());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    credentials: true
+}));
 
-app.use(function(request, response, next) {
-    //response.header('Access-Control-Allow-Origin', "http://localhost:3000");
-    response.header('Access-Control-Allow-Origin', "*");
-    response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');    
-    response.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-})
+app.use(express.json({limit: "50mb"}));
 
 
 app.use('/api', loginRouter);
