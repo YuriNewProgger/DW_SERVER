@@ -28,7 +28,8 @@ class AuthModel{
     }
 
     async Registration(registrationParams) {
-        const { name, surname, patronymic, snpassport, year, phone, email, login, password } = registrationParams;
+        const { name, surname, patronymic, snpassport, year, phone, photo, email, login, password } = registrationParams;
+
 
         if(new Date().getFullYear() - year < 18){
             return {status: 400, text: "Age no valid"};
@@ -55,7 +56,7 @@ class AuthModel{
                         select (select id from logins where login = '${login}') into idLogin;
 
                         INSERT INTO users ("name", surname, patronymic, age, snpassport, phone, photo, email, id_login, id_role)
-                            VALUES('${name}', '${surname}', '${patronymic}', '${new Date().getFullYear() - year}', '${snpassport}', '${phone}', 'NULL', '${email}', idLogin, 2);
+                            VALUES('${name}', '${surname}', '${patronymic}', '${new Date().getFullYear() - year}', '${snpassport}', '${phone}', '${photo}', '${email}', idLogin, 2);
 
                         end
                     $$;

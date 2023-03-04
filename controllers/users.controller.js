@@ -26,8 +26,8 @@ class UsersController{
 
     async deleteUser(request, response) {
         try {
-            await userModel.Delete(request.body);
-            response.sendStatus(200);
+            //await userModel.Delete(request.body);
+            response.sendStatus(await userModel.Delete(request.body));
         } 
         catch (error) {
             console.log(error);

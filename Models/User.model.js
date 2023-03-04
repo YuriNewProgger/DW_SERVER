@@ -24,10 +24,25 @@ class UserModel{
 
     async Delete(userParams) {
         const { id, id_role, id_login} = userParams;
-        if(parseInt(id_role) === 2){
-            await db.query(`DELETE FROM users WHERE id=${id}`);
-            await db.query(`DELETE FROM logins WHERE id=${id_login}`);
-        }
+
+        let activeRents = await db.query(`select is_compleate  from rents where id_user = ${id}`)
+
+        let respStatus = 200;
+
+        activeRents.rows.forEach(item => {
+            if(item.is_compleate === false)
+                respStatus = 406;
+        })
+
+        if(respStatus === 406)
+            return respStatus;
+
+        await db.query(`DELETE FROM rents WHERE id_user=${id}`);
+        await db.query(`DELETE FROM users WHERE id=${id}`);
+        await db.query(`DELETE FROM logins WHERE id=${id_login}`);
+        respStatus = 200;
+
+        return respStatus;
     }
 
     async GetAuthUser(headers){
