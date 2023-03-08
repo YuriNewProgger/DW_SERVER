@@ -1,4 +1,4 @@
-const rentModel = require('../Models/Rent.model');
+const rentModel = require('../Domain/Rent');
 
 class RentController {
 

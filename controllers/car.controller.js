@@ -1,4 +1,4 @@
-const carModel = require('../Models/Car.model');
+const carModel = require('../Domain/Car');
 const authServise = require('../Services/AuthService')
 
 class CarController {

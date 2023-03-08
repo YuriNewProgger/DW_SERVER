@@ -1,4 +1,4 @@
-const authModel = require('../Models/Auth.model');
+const authModel = require('../Domain/Auth');
 const authServise = require('../Services/AuthService');
 
 class LoginController {

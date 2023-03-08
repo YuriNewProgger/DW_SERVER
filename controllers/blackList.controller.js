@@ -1,4 +1,4 @@
-const blackListModel = require('../Models/BlackList.model');
+const blackListModel = require('../Domain/BlackList');
 
 class BlackList {
 
